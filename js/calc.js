@@ -83,4 +83,5 @@ $(document).ready(function() {
     }
   }
 });
+  vm.calculate();
 });
