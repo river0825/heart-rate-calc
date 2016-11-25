@@ -44,7 +44,10 @@
             </div>
             <div class="collapsible-body">
                 <div class="row">
-                    <i class="material-icons md-disable">delete</i>
+                    <div class="input-field col s1">
+                        <i class="material-icons md-disable">delete</i>
+                        {{config.default.caption}}
+                    </div>
                     <div class="input-field col s1" v-for="(val, key) in config.zones">
                         <input id="z0" v-model="config.default.rates[key]" v-on:keyup="calculate" type="text"
                                placeholder=" ">
@@ -61,7 +64,7 @@
             <table class="striped">
                 <thead>
                 <tr>
-                    <th data-field="id" v-for="(col, key) in config.columns">{{key}}</th>
+                    <th data-field="id" v-for="(col, key) in config.columns">{{col}}</th>
                 </tr>
                 </thead>
                 <tbody>
