@@ -7,7 +7,8 @@
  第6級強度：R 爆發力與速度區：無須心率數據*/
 
 $(document).ready(function () {
-    $('.collapsible').collapsible();
+
+
     var vm = new Vue({
         el: '#vue-instance',
         data: {
@@ -20,10 +21,10 @@ $(document).ready(function () {
             ],
             config: {
                 columns: {
-                    "caption": "說明",
-                    "percentage": "",
-                    "mhr": "mhr",
-                    "hhr": "hhr"
+                    caption: "說明",
+                    percentage: "",
+                    mhr: "mhr",
+                    hhr: "hhr"
                 },
                 zones: {
                     z0: {"caption": "第0級強度：D 熱身與技術區", "short_caption": "D 熱身與技術區"},
@@ -33,16 +34,16 @@ $(document).ready(function () {
                     z4: {"caption": "第4級強度：A 無氧耐力區", "short_caption": "A 無氧耐力區"},
                     z5: {"caption": "第5級強度：I 最大耗氧區", "short_caption": "I 最大耗氧區"}
                 },
-                "default": {
-                    "caption": "default",
-                    "rates": [
-                        0.65,
-                        0.79,
-                        0.89,
-                        0.92,
-                        0.97,
-                        1
-                    ]
+                default: {
+                    caption: "default",
+                    rates: {
+                        z0: 0.65,
+                        z1: 0.79,
+                        z2: 0.89,
+                        z3: 0.92,
+                        z4: 0.97,
+                        z5: 1
+                    }
                 }
             },
             values: {
@@ -57,9 +58,9 @@ $(document).ready(function () {
             calculate: function () {
                 this.rows = [];
 
-                var i = 0;
+                prerow = null
                 for (var k in this.config.zones) {
-                    this.config.zones[k].rate = this.config.default.rates[i];
+                    this.config.zones[k].rate = this.config.default.rates[k];
 
                     var cfg = this.config.zones[k];
                     var row = {};
@@ -70,7 +71,6 @@ $(document).ready(function () {
                     row.hhr = Math.round((this.values.heartRate.max - this.values.heartRate.static) * cfg.rate) + this.values.heartRate.static * 1;
 
                     this.rows.push(row);
-                    i++;
                 }
             }
         }
@@ -92,5 +92,7 @@ $(document).ready(function () {
     }
 
     vm.calculate();
+
+    $('.collapsible').collapsible();
 })
 ;
