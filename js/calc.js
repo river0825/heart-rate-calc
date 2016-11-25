@@ -56,21 +56,28 @@ $(document).ready(function () {
         },
         methods: {
             calculate: function () {
+                pr_value = null
                 this.rows = [];
 
-                prerow = null
                 for (var k in this.config.zones) {
                     this.config.zones[k].rate = this.config.default.rates[k];
 
                     var cfg = this.config.zones[k];
-                    var row = {};
+                    var v = {}
+                    var row = {}
 
-                    row.caption = cfg.caption;
-                    row.rate = cfg.rate * 100 + "%";
-                    row.mhr = Math.round(this.values.heartRate.max * cfg.rate);
-                    row.hhr = Math.round((this.values.heartRate.max - this.values.heartRate.static) * cfg.rate) + this.values.heartRate.static * 1;
+                    v.rate = cfg.rate * 100 + "%";
+                    v.mhr = Math.round(this.values.heartRate.max * cfg.rate);
+                    v.hhr = Math.round((this.values.heartRate.max - this.values.heartRate.static) * cfg.rate) + this.values.heartRate.static * 1;
 
-                    this.rows.push(row);
+                    if (pr_value) {
+                        row.caption = cfg.caption;
+                        row.rate = pr_value.rate + " ~ " + v.rate;
+                        row.mhr = pr_value.mhr + " ~ " + v.mhr;
+                        row.hhr = pr_value.hhr + " ~ " + v.hhr;
+                        this.rows.push(row);
+                    }
+                    pr_value = v;
                 }
             }
         }
