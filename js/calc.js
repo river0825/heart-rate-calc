@@ -34,7 +34,7 @@ $(document).ready(function () {
                     z4: {"caption": "第4級強度：A 無氧耐力區", "short_caption": "A 無氧耐力區"},
                     z5: {"caption": "第5級強度：I 最大耗氧區", "short_caption": "I 最大耗氧區"}
                 },
-                default: {
+                def: {
                     caption: "default",
                     rates: {
                         z0: 0.65,
@@ -51,16 +51,54 @@ $(document).ready(function () {
                     max: null,
                     static: null
                 },
-                zones: {}
+                customRates: [
+                    {
+                        caption: "z221",
+                        rates: {
+                            z0: 0.65,
+                            z1: 0.79,
+                            z2: 0.89,
+                            z3: 0.92,
+                            z4: 0.97,
+                            z5: 1
+                        }
+                    },
+                    {
+                        caption: "x221",
+                        rates: {
+                            z0: 0.65,
+                            z1: 0.79,
+                            z2: 0.89,
+                            z3: 0.92,
+                            z4: 0.97,
+                            z5: 1
+                        }
+                    },
+                ]
             }
         },
         methods: {
+            addRate: function () {
+                this.values.customRates.push(
+                    {
+                        caption: "new rate",
+                        rates: {
+                            z0: 0.65,
+                            z1: 0.79,
+                            z2: 0.89,
+                            z3: 0.92,
+                            z4: 0.97,
+                            z5: 1
+                        }
+                    }
+                );
+            },
             calculate: function () {
                 pr_value = null
                 this.rows = [];
 
                 for (var k in this.config.zones) {
-                    this.config.zones[k].rate = this.config.default.rates[k];
+                    this.config.zones[k].rate = this.config.def.rates[k];
 
                     var cfg = this.config.zones[k];
                     var v = {}
