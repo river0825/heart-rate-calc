@@ -47,6 +47,7 @@ $(document).ready(function () {
                 }
             },
             values: {
+                rateKey: 'def',
                 heartRate: {
                     max: null,
                     static: null
@@ -79,6 +80,10 @@ $(document).ready(function () {
         },
         methods: {
             addRate: function () {
+                if (!this.values.customRates) {
+                    this.values.customRates = [];
+                }
+
                 this.values.customRates.push(
                     {
                         caption: "new rate",
@@ -93,12 +98,30 @@ $(document).ready(function () {
                     }
                 );
             },
+            delRate: function (key) {
+                var setting = this.values.customRates[key];
+                var c = confirm("Delete " + setting.caption + "?");
+                if (c) {
+                    this.values.customRates.splice(key, 1);
+                }
+
+            },
+            apply: function (key) {
+                this.values.rateKey = key;
+                this.calculate();
+            },
             calculate: function () {
                 pr_value = null
                 this.rows = [];
 
+                //get rate setting
+                var rateSetting = this.values.customRates[this.values.rateKey];
+                if (!rateSetting) {
+                    rateSetting = this.config.def;
+                }
+
                 for (var k in this.config.zones) {
-                    this.config.zones[k].rate = this.config.def.rates[k];
+                    this.config.zones[k].rate = rateSetting.rates[k];
 
                     var cfg = this.config.zones[k];
                     var v = {}

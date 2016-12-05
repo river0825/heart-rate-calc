@@ -43,11 +43,18 @@
             </div>
             <div class="collapsible-body">
                 <div class="row">
-                    <i class="material-icons md-disable" v-on:click="addRate">create</i>
+                    <div class="col s1">
+                        <a class="btn-floating waves-effect waves-light blue">
+                            <i class="material-icons" v-on:click="addRate">add</i>
+                        </a>
+                    </div>
                 </div>
+
                 <div class="row">
                     <div class="input-field col s1">
-                        <i class="material-icons md-disable">delete</i>
+                        <a class="btn-floating waves-effect waves-light blue" v-on:click="apply('def')">
+                            <i class="material-icons">done</i>
+                        </a>
                     </div>
                     <div class="input-field col s1">
                         <input disabled type="text" v-model="config.def.caption">
@@ -63,7 +70,12 @@
 
                 <div class="row" v-for="(setting, key) in values.customRates">
                     <div class="input-field col s1">
-                        <i class="material-icons md-disable">delete</i>
+                        <a class="btn-floating waves-effect waves-light blue" v-on:click="apply(key)">
+                            <i class="material-icons">done</i>
+                        </a>
+                        <a class="btn-floating waves-effect waves-light blue" v-on:click="delRate(key)">
+                            <i class="material-icons">delete</i>
+                        </a>
                     </div>
 
                     <div class="input-field col s1">
