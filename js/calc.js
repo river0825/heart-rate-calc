@@ -155,7 +155,8 @@ $(document).ready(function () {
         //load values
         var values = localStorage.getItem("values");
         if (values) {
-            vm.values = JSON.parse(values);
+            var jsonObj = JSON.parse(values);
+            vm.values = Object.assign(vm.values, jsonObj);
         }
     }
 
